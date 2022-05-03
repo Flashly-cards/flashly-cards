@@ -30,6 +30,7 @@
   "homepage": "https://github.com/Flashly-cards/flashly-cards#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "mongoose": "^6.3.2",

@@ -20,7 +20,6 @@ app.get('/', (req, res) => {
 // set up routes 
 const authRoute = require('./routers/authRouter')
 const flashcardRoute = require('./routers/flashcardRouter');
-
 // set up route handlers
 app.use('/login', authRoute);
 
