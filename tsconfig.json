@@ -4,6 +4,6 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "server/controllers/flashcardController.js"],
   "exclude": ["node_modules"]
 }
