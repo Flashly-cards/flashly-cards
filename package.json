@@ -12,10 +12,11 @@
   ],
   "scripts": {
     "test": "node jest/scripts/test.js",
-    "build": "webpack --config ./webpack.config.js",
-    "watch": "webpack --config webpack.config.js --watch",
+    "build": "concurrently \"webpack --config ./webpack.config.js\" \"npx tailwindcss -i ./client/input.css -o ./bundle/output.css\"",
+    "tailwind": "npx tailwindcss -i ./client/input.css -o ./bundle/output.css --watch",
+    "webpack": "webpack --config webpack.config.js --watch",
     "start": "npm run build && node server/server.ts",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\""
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\" \"npm run webpack\" \"npm run tailwind\""
   },
   "repository": {
     "type": "git",

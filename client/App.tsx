@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import './AppStyles.css';
+import '../bundle/output.css';
 
 export default function App() {
 
   return (
-    <div>
+    <div className="text-indigo-500 text-sm">
+      HELLO TAILWIND
       <Router>
         <div>
           <Routes>

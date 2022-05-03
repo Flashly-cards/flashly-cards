@@ -5,6 +5,6 @@ module.exports = {
     require('@tailwindcss/forms'),
   ],
   content: [
-    './src/**/*.{tsx, html}'
+    './client/**/*.{tsx, html}'
   ],
 };
