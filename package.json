@@ -1,0 +1,67 @@
+{
+  "name": "flashly-cards",
+  "version": "1.0.0",
+  "description": "Flash cards with offline functionality",
+  "main": "index.tsx",
+  "moduleFileExtensions": [
+    "js",
+    "jsx",
+    "ts",
+    "tsx",
+    "json"
+  ],
+  "scripts": {
+    "test": "node jest/scripts/test.js",
+    "build": "concurrently \"webpack --config ./webpack.config.js\" \"npx tailwindcss -i ./client/input.css -o ./bundle/output.css\"",
+    "tailwind": "npx tailwindcss -i ./client/input.css -o ./bundle/output.css --watch",
+    "webpack": "webpack --config webpack.config.js --watch",
+    "start": "npm run build && node server/server.ts",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\" \"npm run webpack\" \"npm run tailwind\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flashly-cards/flashly-cards.git"
+  },
+  "author": "George Jeng, Rankin Draa, Steven Nguyen, Will Chu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Flashly-cards/flashly-cards/issues"
+  },
+  "homepage": "https://github.com/Flashly-cards/flashly-cards#readme",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "node": "^17.7.2",
+    "pg": "^8.7.3",
+    "postcss-loader": "^6.2.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-redux": "^8.0.1",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
+    "redux": "^4.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
+    "@svgr/webpack": "^6.2.1",
+    "@tailwindcss/forms": "^0.5.0",
+    "babel-loader": "^8.2.5",
+    "concurrently": "^7.1.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^2.0.16",
+    "redux-devtools-extension": "^2.13.9",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.24",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
+  }
+}
