@@ -2,7 +2,7 @@
   "name": "flashly-cards",
   "version": "1.0.0",
   "description": "Flash cards with offline functionality",
-  "main": "index.js",
+  "main": "index.tsx",
   "moduleFileExtensions": [
     "js",
     "jsx",
@@ -11,11 +11,11 @@
     "json"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node jest/scripts/test.js",
     "build": "webpack --config ./webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
-    "start": "npm run build",
-    "dev": "electron ./dist/index.js"
+    "start": "npm run build && node server/server.ts",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\""
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "express": "^4.18.1",
     "node": "^17.7.2",
     "pg": "^8.7.3",
+    "postcss-loader": "^6.2.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.1",
@@ -45,6 +46,7 @@
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
     "@svgr/webpack": "^6.2.1",
+    "@tailwindcss/forms": "^0.5.0",
     "babel-loader": "^8.2.5",
     "concurrently": "^7.1.0",
     "cross-env": "^7.0.3",
@@ -54,6 +56,8 @@
     "nodemon": "^2.0.16",
     "redux-devtools-extension": "^2.13.9",
     "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.24",
+    "ts-loader": "^9.3.0",
     "typescript": "^4.6.4",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2",
