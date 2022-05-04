@@ -10,32 +10,6 @@ import {
 import Card from '../components/Card'
 import { RootState } from '../state/store'
 
-// const collection = useSelector((store: RootState) => store.collection.collectionState );
-
-// const navigation = collection.reduce((acc: any, cur: any) => {
-//   type navType = {
-//     name: string,
-//     href: string,
-//     icon: typeof FolderIcon
-//     current: boolean,
-//   }
-
-//   const temp: navType = {
-//     name: cur.collectionName,
-//     href: '#',
-//     icon: FolderIcon,
-//     current: false
-//   }
-
-//   acc =acc.push(temp)
-// }, [])
-
-const navigation = [
-  { name: 'Collection #1', href: '#', icon: FolderIcon, current: true },
-  { name: 'Collection #2', href: '#', icon: FolderIcon, current: false },
-  { name: 'Collection #3', href: '#', icon: FolderIcon, current: false },
-]
-
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
