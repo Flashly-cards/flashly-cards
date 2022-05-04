@@ -3,6 +3,7 @@ const router = express.Router();
 
 // import in controllers
 const flashcardController = require('../controllers/flashcardController');
+const collectionController = require('../controllers/collectionController');
 
 router.post(
   '/getCards', 
@@ -17,10 +18,12 @@ router.post(
 router.post(
   '/newcard', 
   flashcardController.newcard, 
+  collectionController.findCollection,
+  collectionController.addCardToCollection,
   (req, res) => {
     console.log('successfully created new card');
     // send all of the cards (array of objects) to the front end
-    res.status(200).json(res.locals.data);
+    res.status(200).json(res.locals.updatedCollection);
   }
 )
 
