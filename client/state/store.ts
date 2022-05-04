@@ -1,10 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
-import sampleReducer from './features/sampleSlice';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from 'redux';
+import collectionReducer from './features/collectionSlice';
+
+const reducers = combineReducers({
+  collection: collectionReducer
+});
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: {
-    sample: sampleReducer
-  }
+  reducer: persistedReducer
 })
 
 export type RootState = ReturnType<typeof store.getState>;
