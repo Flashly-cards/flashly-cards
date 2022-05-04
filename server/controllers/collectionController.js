@@ -3,7 +3,13 @@ const { Collections } = require('../models/Models');
 const collectionController = {};
 
 collectionController.createCollection = (req, res, next) => {
-  const { userId, collectionName } = req.body;
+  // let { userId, collectionName } = req.body;
+  let userId = req.body.userId;
+  let collectionName = req.body.collectionName;
+  if (userId === undefined) {
+    collectionName = 'Uncategorized';
+    userId = res.locals.newUser['_id'];
+  }
   const queryObject = { userId, collectionName }; 
   Collections.create(
     queryObject,
@@ -16,6 +22,8 @@ collectionController.createCollection = (req, res, next) => {
         })
       } else {
         console.log('newcollection: ', newCollection);
+        console.log('newCollection ID: ', newCollection.userId)
+        // deconstruct the newCollection to make userID a string (currently array)
         res.locals.data = newCollection;
         next();
       }

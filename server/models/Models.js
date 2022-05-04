@@ -5,14 +5,14 @@ const myURI = 'mongodb+srv://flashly:codesmith123@flashly.0fwpq.mongodb.net/myFi
 mongoose.connect(myURI);
 
 const flashcardSchema = new Schema({
-  userId: { type: [mongoose.Schema.Types.ObjectId], ref: 'users', required: true},
-  collectionId: { type: [mongoose.Schema.Types.ObjectId], ref: 'collections', required: true},
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},
+  collectionId: { type: mongoose.Schema.Types.ObjectId, ref: 'collections', required: true},
   frontText: { type: String, required: true },
   backText: { type: String, required: true }
 });
 
 const collectionSchema = new Schema({
-  userId: { type: [mongoose.Schema.Types.ObjectId], ref: 'users', required: true},
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},
   collectionName: { type: String, required: true },
   cards: { type: Object, default: {} }
 });

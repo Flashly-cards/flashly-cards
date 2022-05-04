@@ -1,4 +1,5 @@
-const { Flashcards } = require('../models/Models');
+const { Collection } = require('mongoose');
+const { Flashcards, Collections } = require('../models/Models');
 
 const flashcardController = {};
 
@@ -32,8 +33,8 @@ flashcardController.getcards = (req, res, next) => {
 };
 
 flashcardController.newcard = (req, res, next) => {
-  const { userId, collectionId, question, answer } = req.body;
-  const queryObject = { userId, collectionId, frontText: question, backText: answer };
+  const { userId, collectionId, frontText, backText } = req.body;
+  const queryObject = { userId, collectionId, frontText, backText };
   Flashcards.create(
     queryObject,
     (err, createdCard) => {
@@ -46,6 +47,8 @@ flashcardController.newcard = (req, res, next) => {
         }))
       } else {
         res.locals.data = createdCard;
+        res.locals.nextChain.collectionId = collectionId;
+        res.locals.nextChain._id = createdCard._id;
         console.log("cards returned from flashcardController.newcards: ", createdCard);
         return next();
       }
@@ -54,7 +57,7 @@ flashcardController.newcard = (req, res, next) => {
 };
 
 // flashcardController.editcard = (req, res, next) => {
-// const { userId, cardId, question, answer} = req.body;
+// const { userId, cardId, frontText, answer} = req.body;
 // const queryObject = { cardId, frontText: question, backText: answer };
 // const update = { frontText: question, backText: answer}
 // Flashcards.findOneAndUpdate(

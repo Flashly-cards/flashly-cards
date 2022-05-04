@@ -1,4 +1,4 @@
-const { Users } = require('../models/Models');
+const { Users, Collections } = require('../models/Models');
 const bcrypt = require('bcrypt');
 
 const authController = {};
@@ -45,7 +45,6 @@ authController.getHashedPass = (req, res, next) => {
         message: {err: `unable to retrieve hashed password`}
       })
     }
-    console.log("userInfo: ", userInfo)
     res.locals.user.userId = userInfo._id;
     res.locals.user.username = userInfo.username;
     res.locals.user.hashedPass = userInfo.password;
@@ -57,22 +56,20 @@ authController.getHashedPass = (req, res, next) => {
 authController.comparePass = (req, res, next) => {
   const { password, hashedPass } = res.locals.user
   if (bcrypt.compareSync(password, hashedPass)) {
-    res.locals.authorized = true;
+    res.locals.user.authorized = true;
     return next();
   } else {
-    res.locals.authorized = false
+    res.locals.user.authorized = false
     return next();
   }
 }
 
 authController.getCollections = (req, res, next) => {
-  console.log('GET COLLECTIONS');
   const { userId, authorized } = res.locals.user
   if (authorized === false) {
     return next();
   } else {
-    Collections.find({ userId: userId }, '_id, collectionName').exec()
-    .then((err, collections) => {
+    Collections.find({ 'userId': userId }, (err, collections) => {
       if (err) {
         return next({
           log: `authController.getCollections ERROR: ${err}`,
@@ -80,13 +77,11 @@ authController.getCollections = (req, res, next) => {
           message: {err: `unable to retrieve user's collections`}
         })
       }
-      console.log('COLLECTIONS', collections);
       res.locals.user.hashedPass = '';
       res.locals.user.password = '';
       res.locals.user.collections = collections;
-      console.log('USER', res.locals.user);
-    })
-    .then(() => next());
+      return next();
+    });
   }
 }
 
