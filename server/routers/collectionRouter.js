@@ -12,6 +12,18 @@ router.post(
   }
 )
 
+/* 
+new card in an existing collection (this middleware gets invoked when a new flashcard is created and needs to be added to an existing collection)
+
+below is what is stored in res.locals after a new card is created (but before sent to front end)
+  res.locals.data = createdCard;
+  res.locals.nextChain.collectionId = collectionId;
+  res.locals.nextChain._id = createdCard._id;
+
+
+
+*/
+
 // router.post(
 //   '/editcollection',
 //   collectionController.editCollection,

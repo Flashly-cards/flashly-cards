@@ -1,40 +1,15 @@
-import { Fragment, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   BellIcon,
   FolderIcon,
   MenuAlt2Icon,
   XIcon,
-} from '@heroicons/react/outline'
-import Card from '../components/Card'
-import { RootState } from '../state/store'
-
-// const collection = useSelector((store: RootState) => store.collection.collectionState );
-
-// const navigation = collection.reduce((acc: any, cur: any) => {
-//   type navType = {
-//     name: string,
-//     href: string,
-//     icon: typeof FolderIcon
-//     current: boolean,
-//   }
-
-//   const temp: navType = {
-//     name: cur.collectionName,
-//     href: '#',
-//     icon: FolderIcon,
-//     current: false
-//   }
-
-//   acc =acc.push(temp)
-// }, [])
-
-const navigation = [
-  { name: 'Collection #1', href: '#', icon: FolderIcon, current: true },
-  { name: 'Collection #2', href: '#', icon: FolderIcon, current: false },
-  { name: 'Collection #3', href: '#', icon: FolderIcon, current: false },
-]
+} from '@heroicons/react/outline';
+import Card from '../components/Card';
+import { RootState } from '../state/store';
+import { updateCollection } from '../state/features/collectionSlice';
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -46,7 +21,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+
+export default function DashboardContainer() {
+  const dispatch = useDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const collection = useSelector((store: RootState) => store.collection.collectionState );
   const navigation = collection.reduce((acc: any, cur: any) => {
@@ -67,6 +44,7 @@ export default function Example() {
     acc.push(temp)
     return acc;
   }, [])
+  
 
   return (
     <>
@@ -176,6 +154,7 @@ export default function Example() {
                 alt="Workflow"
               />
               <div className='bg-gray-900 text-white group flex items-center px-2 py-2 text-lg font-medium rounded-md'>Flashly</div>
+              
             </div>
             <div className="flex-1 flex flex-col overflow-y-auto">
               <nav className="flex-1 px-2 py-4 space-y-1">
@@ -238,6 +217,46 @@ export default function Example() {
                   className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   <span className="sr-only">View notifications</span>
+                  <button onClick={() => {dispatch(updateCollection(
+                    [
+                      {
+                      userId:'1234',
+                      collectionName:'this shit worked',
+                      _id:'sample id',
+                      __v: 5,
+                      cards: {
+                        'sampleCardId1': {
+                          collectionId: "sampleColId",
+                          frontText: "sample front",
+                          backText: "sample back"
+                        },
+                        'sampleCardId2': {
+                          collectionId: "sampleColId2",
+                          frontText: "sample front2",
+                          backText: "sample back2"
+                        },
+                      }
+                    },
+                    {
+                      userId:'1234',
+                      collectionName:'Still works HO',
+                      _id:'sample id',
+                      __v: 5,
+                      cards: {
+                        'sampleCardId1': {
+                          collectionId: "sampleColId",
+                          frontText: "sample front",
+                          backText: "sample back"
+                        },
+                        'sampleCardId2': {
+                          collectionId: "sampleColId2",
+                          frontText: "sample front2",
+                          backText: "sample back2"
+                        },
+                      }
+                    }
+                  ]
+                  ))}}>CLICK ME PUSSY</button>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
 
@@ -284,7 +303,6 @@ export default function Example() {
               </div>
             </div>
           </div>
-
           <main className="flex-1">
             <div className="py-6">
               <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8">

@@ -16,7 +16,12 @@ router.post('/',
   }
 )
 
-router.post('/addUser', authController.checkRegister, authController.hashPass, authController.addUser, collectionController.createCollection, (req, res) => {
+router.post('/addUser',
+  authController.checkRegister,
+  authController.hashPass,
+  authController.addUser,
+  collectionController.createCollection,
+  (req, res) => {
   console.log('successfully created user');
   // send the created user info to front end
   res.status(200).json(res.locals.newUser);

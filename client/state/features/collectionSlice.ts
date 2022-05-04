@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { REHYDRATE } from 'redux-persist';
 
 type Cards = {
   collectionId: string,
@@ -14,16 +15,16 @@ type CollectionItem = {
   cards: {
     [key: string]:Cards
   }
-}
+}[]
 
 type InitialState = {
-  collectionState: CollectionItem[]
+  collectionState: CollectionItem
 };
 
 const initialState: InitialState ={
   collectionState: [{
     userId:'1234',
-    collectionName:'sample collection',
+    collectionName:'supppppp',
     _id:'sample id',
     __v: 5,
     cards: {
@@ -64,9 +65,14 @@ export const collectionSlice = createSlice({
   initialState: initialState,
   reducers: {
     updateCollection: (state, action: PayloadAction<CollectionItem>) => {
-      state.collectionState = [action.payload];
+      state.collectionState = action.payload;
     },
-  }
+  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(REHYDRATE, (state) => {
+  //     console.log('in rehydrate')
+  //   })
+  // }
 })
 
 export const { updateCollection } = collectionSlice.actions;
