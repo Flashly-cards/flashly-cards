@@ -14,7 +14,7 @@ const flashcardSchema = new Schema({
 const collectionSchema = new Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},
   collectionName: { type: String, required: true },
-  cards: { type: Object, default: {} }
+  cards: { type: Array, required: false }
 });
 
 const userSchema = new Schema({

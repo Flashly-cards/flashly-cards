@@ -10,7 +10,8 @@ collectionController.createCollection = (req, res, next) => {
     collectionName = 'Uncategorized';
     userId = res.locals.newUser['_id'];
   }
-  const queryObject = { userId, collectionName }; 
+  const cards = [];
+  const queryObject = { userId, collectionName, cards }; 
   Collections.create(
     queryObject,
     (err, newCollection) => {
@@ -24,6 +25,7 @@ collectionController.createCollection = (req, res, next) => {
         console.log('newcollection: ', newCollection);
         console.log('newCollection ID: ', newCollection.userId)
         // deconstruct the newCollection to make userID a string (currently array)
+        // res.locals.newUser['cards'] = newCollection; // we dont need to store the collection in user document
         res.locals.data = newCollection;
         next();
       }
@@ -31,8 +33,28 @@ collectionController.createCollection = (req, res, next) => {
   )
 }
 
+/*
+collectionController.addCardToCollection = (req, res, next) => {
+  const { frontText, backText, createdCard, collectionId } = res.locals.data;
 
+  const queryObject = { collectionId }; 
+  const update = 
 
+  Collections.findOneAndUpdate(
+    queryObject,
+    (err, updatedCollection) => {
+      if (err) {
+
+      } else {
+        res.locals.
+
+      }
+
+    }
+  )
+}
+
+*/
 
 
 module.exports = collectionController;

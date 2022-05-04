@@ -6,6 +6,7 @@ const authController = {};
 authController.checkLogin = (req, res, next) => {
   const userProps = ['email', 'password'];
   res.locals.user = {};
+  console.log(req.body);
   for (const prop of userProps) {
     if (!req.body[prop]) {
       return next({
@@ -20,23 +21,8 @@ authController.checkLogin = (req, res, next) => {
 }
 
 authController.getHashedPass = (req, res, next) => {
-  const { email } = res.locals.user;
-  // Users.findOne({ 'email': email }).exec()
-  // .then((userInfo) => {
-  //   console.log("userInfo: ", userInfo)
-  //   // if (err) {
-  //   //   return next({
-  //   //     log: `authController.getHashedPass ERROR: ${err}`,
-  //   //     status: 400,
-  //   //     message: {err: `unable to retrieve hashed password`}
-  //   //   })
-  //   // }
-  //   res.locals.user.userId = userInfo._id;
-  //   res.locals.user.username = userInfo.username;
-  //   res.locals.user.hashedPass = userInfo.password;
-  // })
-  // .then(() => next());
-
+  let email = res.locals.user.email;
+  email = email.toLowerCase();
   Users.findOne({ email: email }, (err, userInfo) => {
     if (err) {
       return next({
@@ -45,10 +31,15 @@ authController.getHashedPass = (req, res, next) => {
         message: {err: `unable to retrieve hashed password`}
       })
     }
-    res.locals.user.userId = userInfo._id;
-    res.locals.user.username = userInfo.username;
-    res.locals.user.hashedPass = userInfo.password;
-    return next();
+    if (userInfo === null) {
+      const response = 'User or password incorrect';
+      res.status(401).json(response);
+    } else {
+      res.locals.user.userId = userInfo._id;
+      res.locals.user.username = userInfo.username;
+      res.locals.user.hashedPass = userInfo.password;
+      return next()
+    }
   })
   // .then(() => next());
 }
@@ -113,6 +104,9 @@ authController.hashPass = (req, res, next) => {
 }
 
 authController.addUser = (req, res, next) => {
+  let unsanitizedEmail = res.locals.newUser.email;
+  res.locals.newUser.email = unsanitizedEmail.toLowerCase();
+  console.log('GEORGE', res.locals.newUser.email);
   const { email, username, password } = res.locals.newUser;
   Users.create(
     { email, username, password },

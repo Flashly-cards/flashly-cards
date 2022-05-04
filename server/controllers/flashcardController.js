@@ -34,6 +34,7 @@ flashcardController.getcards = (req, res, next) => {
 
 flashcardController.newcard = (req, res, next) => {
   const { userId, collectionId, frontText, backText } = req.body;
+  // add logic for if a collection Id isnt provided (need to give it the "Uncategorized" collection Id)
   const queryObject = { userId, collectionId, frontText, backText };
   Flashcards.create(
     queryObject,
@@ -46,9 +47,9 @@ flashcardController.newcard = (req, res, next) => {
           message: {err: 'error creating the card'}
         }))
       } else {
-        res.locals.data = createdCard;
-        res.locals.nextChain.collectionId = collectionId;
-        res.locals.nextChain._id = createdCard._id;
+        res.locals.data['createdCard'] = createdCard;
+        res.locals.data['collectionId'] = collectionId;
+        res.locals.data['_id'] = createdCard['_id'];
         console.log("cards returned from flashcardController.newcards: ", createdCard);
         return next();
       }
@@ -107,8 +108,9 @@ flashcardController.newcard = (req, res, next) => {
 // flashcardController.deletecard = (req, res, next) => {
 // const { userId, collectionId } = req.body;
 // const queryObject = { cardId, collectionId }
+// const delete = { cardId, collectionId }
 // Flashcards.deleteOne(
-//   queryObject,
+//   queryObject, delete,
 //   (err, cards) => {
 //     if (err) {
 //       return (next({
