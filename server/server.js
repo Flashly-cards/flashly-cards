@@ -20,43 +20,11 @@ app.get('/', (req, res) => {
 // set up routes 
 const authRoute = require('./routers/authRouter')
 const flashcardRoute = require('./routers/flashcardRouter');
+const collectionRoute = require('./routers/collectionRouter');
 // set up route handlers
 app.use('/login', authRoute);
-
-//login
-// app.post('/register', (req, res) => {
-//   return res.status(200).redirect('/login');
-// })
-// app.post('/register', (req, res) => {
-//   return res.status(200).redirect('/newcard');
-// })
-
-
-//cards
-// app.post('/newcard', (req, res) => {
-//   return res.status(200).sendFile());
-// })
-// app.post('/editcard', (req, res) => {
-//   return res.status(200).sendFile());
-// })
-// app.post('/removecard', (req, res) => {
-//   return res.status(200).sendFile());
-// })
-// app.delete('/deletecard', (req, res) => {
-//   return res.status(200).sendFile());
-// })
-
-
-//collection
-// app.post('/newcollection', (req, res) => {
-//   return res.status(200).sendFile));
-// })
-// app.post('/editcollection', (req, res) => {
-//   return res.status(200).sendFile());
-// })
-// app.delete('/deletecollection', (req, res) => {
-//   return res.status(200).sendFile());
-// })
+app.use('/cards', flashcardRoute);
+app.use('/collection', collectionRoute)
 
 
 // catch all route handler 
@@ -67,14 +35,15 @@ app.use((req, res) => {
 
 
 // global error handler
-app.use((err, req, res) =>{
+app.use((err, req, res, next) =>{
   const defaultErr = {
       log: 'Express error unknown middleware error',
       status: 400,
-      message: {err: 'Error occurred'},
+      // message: {err: 'Error occurred'},
+      message: 'Error occurred'
   };
   const errorObj = Object.assign({}, defaultErr, err);
-  console.log(errorObj.log);
+  console.log("global error: ", errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
 });
 
