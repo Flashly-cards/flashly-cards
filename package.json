@@ -15,8 +15,8 @@
     "build": "concurrently \"webpack --config ./webpack.config.js\" \"npx tailwindcss -i ./client/input.css -o ./bundle/output.css\"",
     "tailwind": "npx tailwindcss -i ./client/input.css -o ./bundle/output.css --watch",
     "webpack": "webpack --config webpack.config.js --watch",
-    "start": "npm run build && node server/server.ts",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\" \"npm run webpack\" \"npm run tailwind\""
+    "start": "npm run build && node server/server.js",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.js\" \"npm run webpack\" \"npm run tailwind\""
   },
   "repository": {
     "type": "git",
@@ -29,9 +29,14 @@
   },
   "homepage": "https://github.com/Flashly-cards/flashly-cards#readme",
   "dependencies": {
+    "@headlessui/react": "^1.6.1",
+    "@heroicons/react": "^1.0.6",
     "@reduxjs/toolkit": "^1.8.1",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "mongoose": "^6.3.2",
     "node": "^17.7.2",
     "pg": "^8.7.3",
     "postcss-loader": "^6.2.1",
@@ -40,7 +45,9 @@
     "react-redux": "^8.0.1",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
